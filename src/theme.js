@@ -1,3 +1,4 @@
+//default
 module.exports = {
 	// photoshop colors
 	a: '#343434',
@@ -5,3 +6,5 @@ module.exports = {
 	c: '#b8b8b8',
 	d: '#d6d6d6',
 };
+
+//keepcube

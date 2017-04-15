@@ -4,7 +4,8 @@ var Settings = require('./settings'),
 	style = require('./utils').style,
 	Theme = require('./theme'),
 	STORAGE_PREFIX = require('./utils').STORAGE_PREFIX,
-	UINumber = require('./ui_number')
+	UINumber = require('./ui_number'),
+	UIColor = require('./ui_number')
 	;
 
 function LayerCabinet(data, dispatcher) {

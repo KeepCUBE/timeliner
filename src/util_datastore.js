@@ -72,12 +72,12 @@ DataStore.prototype.getValue = function(paths) {
 };
 
 DataStore.prototype.setValue = function(paths, value) {
+  console.log(paths)
 	var descend = paths.split(this.DELIMITER);
 	var reference = this.data;
 	for (var i = 0, il = descend.length - 1; path = descend[i], i < il ; i++) {
 		reference = reference[path];
 	}
-
 	reference[path] = value;
 
 	this.listeners.forEach(function(l) {

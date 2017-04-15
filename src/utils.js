@@ -11,7 +11,8 @@ module.exports = {
 	format_friendly_seconds: format_friendly_seconds,
 	findTimeinLayer: findTimeinLayer,
 	timeAtLayer: timeAtLayer,
-	proxy_ctx: proxy_ctx
+	proxy_ctx: proxy_ctx,
+	inputType: inputType
 };
 
 /**************************/
@@ -34,6 +35,10 @@ function style(element, var_args) {
 			element.style[s] = styles[s];
 		}
 	}
+}
+
+function inputType (element, type) {
+	element.setAttribute('type', type)
 }
 
 function saveToFile(string, filename) {
@@ -213,6 +218,7 @@ function timeAtLayer(layer, t) {
 		}
 		if (t < entry.time) {
 			// possibly a tween
+/*
 			if (!prev_entry.tween) { // or if value is none
 				return {
 					value: prev_entry.value,
@@ -222,8 +228,10 @@ function timeAtLayer(layer, t) {
 					keyframe: false
 				};
 			}
+*/
 
 			// calculate tween
+/*
 			var time_diff = entry.time - prev_entry.time;
 			var value_diff = entry.value - prev_entry.value;
 			var tween = prev_entry.tween;
@@ -231,10 +239,52 @@ function timeAtLayer(layer, t) {
 			var dt = t - prev_entry.time;
 			var k = dt / time_diff;
 			var new_value = prev_entry.value + Tweens[tween](k) * value_diff;
+*/
+      // calculate color tween
+			var time_diff = entry.time - prev_entry.time;
+
+			if(entry.value == 0) {
+				rgb = {r: 0, g: 0, b: 0}
+			} else {
+				var entryRGB = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(entry.value);
+				rgb = {
+							r: parseInt(entryRGB[1], 16),
+							g: parseInt(entryRGB[2], 16),
+							b: parseInt(entryRGB[3], 16)
+				};
+			}
+
+      if(prev_entry.value == 0) {
+        prev_rgb = {r: 0, g: 0, b: 0}
+      } else {
+        var prev_entryRGB = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(prev_entry.value);
+        prev_rgb = {
+          r: parseInt(prev_entryRGB[1], 16),
+          g: parseInt(prev_entryRGB[2], 16),
+          b: parseInt(prev_entryRGB[3], 16)
+        };
+      }
+
+			 var dt = t - prev_entry.time;
+			 var k = dt / time_diff;
+
+			 var value_diff, newVal = {}
+			 value_diff = {
+				 r: rgb.r - prev_rgb.r,
+				 g: rgb.g - prev_rgb.g,
+				 b: rgb.b - prev_rgb.b
+			 }
+
+			 newVal.r = prev_rgb.r + Tweens['linear'](k) * value_diff.r;
+			 newVal.g = prev_rgb.g + Tweens['linear'](k) * value_diff.g;
+			 newVal.b = prev_rgb.b + Tweens['linear'](k) * value_diff.b;
+
+			 console.log(newVal)
+       newVal = rgbToHex(newVal.r, newVal.g, newVal.b)
 
 			return {
 				entry: prev_entry,
-				value: new_value,
+				value: newVal,
 				tween: prev_entry.tween,
 				can_tween: true,
 				keyframe: false
@@ -248,6 +298,15 @@ function timeAtLayer(layer, t) {
 		keyframe: false
 	}; 
 
+}
+
+function componentToHex(c) {
+  var hex = Math.round(c).toString(16);
+  return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(r, g, b) {
+  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
 
 

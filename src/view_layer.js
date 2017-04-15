@@ -1,6 +1,7 @@
 var
 	Theme = require('./theme'),
 	UINumber = require('./ui_number'),
+	UIColor = require('./ui_color_input'),
 	Tweens = require('./util_tween'),
 	Settings = require('./settings'),
 	utils = require('./utils')
@@ -102,7 +103,7 @@ function LayerView(layer, dispatcher) {
 	}
 
 
-	var number = new UINumber(layer, dispatcher);
+	var number = new UIColor(layer, dispatcher);
 
 	number.onChange.do(function(value, done) {
 		state.get('_value').value = value;
@@ -116,7 +117,7 @@ function LayerView(layer, dispatcher) {
 	dom.appendChild(label);
 	dom.appendChild(keyframe_button);
 	dom.appendChild(number.dom);
-	dom.appendChild(dropdown);
+	//dom.appendChild(dropdown);
 	
 
 	utils.style(dom, {

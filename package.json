@@ -1,6 +1,6 @@
 {
   "name": "timeliner",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "simple js animation timeline library",
   "main": "timeliner.js",
   "scripts": {
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/zz85/timeliner.git"
+    "url": "git+https://github.com/zz85/timeliner.git"
   },
   "keywords": [
     "timeline",
@@ -33,6 +33,7 @@
   "devDependencies": {
     "do.js": "^1.0.0",
     "package-json-versionify": "^1.0.2",
-    "uglifyify": "^2.6.0"
+    "uglifyify": "^2.6.0",
+    "watchify": "^3.9.0"
   }
 }
