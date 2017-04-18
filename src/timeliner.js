@@ -413,7 +413,7 @@ function Timeliner(target, targetEl) {
 	var pane = document.createElement('div');
 
 	style(pane, {
-		position: 'fixed',
+		position: 'relative',
 		top: '20px',
 		left: '20px',
 		margin: 0,
@@ -626,7 +626,7 @@ function Timeliner(target, targetEl) {
 	// root = iframe.contentDocument.body;
 
 	root.appendChild(pane);
-	root.appendChild(ghostpane);
+	//root.appendChild(ghostpane);
 
 	div.appendChild(layer_panel.dom);
 	div.appendChild(timeline.dom);
