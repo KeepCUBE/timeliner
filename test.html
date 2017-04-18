@@ -20,16 +20,15 @@ body {
 </style>
 
 <div id="box"></div>
+<div id="timeliner"></div>
 <script src="timeliner.js"></script>
 <script>
 var target = {
-	x: 0,
-	y: 0,
-	rotate: 0
 };
 
 // initialize timeliner
-var timeliner = new Timeliner(target);
+targetEl = document.getElementById('timeliner')
+var timeliner = new Timeliner(target, targetEl);
 // timeliner.addLayer('x');
 // timeliner.addLayer('y');
 // timeliner.addLayer('rotate');

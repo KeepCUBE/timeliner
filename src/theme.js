@@ -8,3 +8,10 @@ module.exports = {
 };
 
 //keepcube
+module.exports = {
+  // photoshop colors
+  a: '#FFFFFF',
+  b: '#F0F0F0',
+  c: '#000000',
+  d: '#0F0F0F',
+};

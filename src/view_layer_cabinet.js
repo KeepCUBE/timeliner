@@ -132,6 +132,10 @@ function LayerCabinet(data, dispatcher) {
 	totalTime.onChange.do(function(value, done) {
 		totalTimeStore.value = value;
 		repaint();
+		var val = (Number(range.value) + 1)/2
+		console.log(val*data.get('ui:totalTime').value)
+    dispatcher.fire('update.scale', val/data.get('ui:totalTime').value);
+    //dispatcher.fire('update.scale', Math.pow(100, -range.value) );
 	});
 
 	// Play Controls
@@ -148,8 +152,7 @@ function LayerCabinet(data, dispatcher) {
 		marginTop: '4px',
 		// borderBottom: '1px solid ' + Theme.b
 	});
-	top.appendChild(operations_div);
-	// top.appendChild(document.createElement('br'));
+	//top.appendChild(operations_div);
 
 
 	// open _alt

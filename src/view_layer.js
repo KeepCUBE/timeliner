@@ -86,6 +86,7 @@ function LayerView(layer, dispatcher) {
 
 	}
 
+/*
 	// Solo
 	var solo_toggle = new ToggleButton('S');
 	dom.appendChild(solo_toggle.dom);
@@ -101,6 +102,7 @@ function LayerView(layer, dispatcher) {
 	mute_toggle.onClick = function() {
 		dispatcher.fire('action:mute', layer, mute_toggle.pressed);
 	}
+*/
 
 
 	var number = new UIColor(layer, dispatcher);

@@ -37,7 +37,7 @@ function LayerProp(name) {
 	*/
 }
 
-function Timeliner(target) {
+function Timeliner(target, targetEl) {
 	// Dispatcher for coordination
 	var dispatcher = new Dispatcher();
 
@@ -490,8 +490,8 @@ function Timeliner(target) {
 	});
 
 	pane.appendChild(div);
-	pane.appendChild(pane_status);
-	pane.appendChild(pane_title);
+	//pane.appendChild(pane_status);
+	//pane.appendChild(pane_title);
 
 	var label_status = document.createElement('span');
 	label_status.textContent = 'hello!';
@@ -610,8 +610,13 @@ function Timeliner(target) {
 	//
 
 	// Shadow Root
-	var root = document.createElement('timeliner');
-	document.body.appendChild(root);
+	var root
+	if(targetEl) {
+		root = targetEl
+	} else {
+		root = document.createElement('timeliner');
+		document.body.appendChild(root);
+	}
 	if (root.createShadowRoot) root = root.createShadowRoot();
 
 	window.r = root;
@@ -627,7 +632,7 @@ function Timeliner(target) {
 	div.appendChild(timeline.dom);
 
 	var scrollbar = new ScrollBar(200, 10);
-	div.appendChild(scrollbar.dom);
+	//div.appendChild(scrollbar.dom);
 
 	// percentages
 	scrollbar.onScroll.do(function(type, scrollTo) {
@@ -950,94 +955,6 @@ function Timeliner(target) {
 
 			redraw = false;
 
-			if (clicked && clicked.isResizing) {
-
-				if (clicked.onRightEdge) pane.style.width = Math.max(x, minWidth) + 'px';
-				if (clicked.onBottomEdge) pane.style.height = Math.max(y, minHeight) + 'px';
-
-				if (clicked.onLeftEdge) {
-					var currentWidth = Math.max(clicked.cx - e.clientX  + clicked.w, minWidth);
-					if (currentWidth > minWidth) {
-						pane.style.width = currentWidth + 'px';
-						pane.style.left = e.clientX + 'px';
-					}
-				}
-
-				if (clicked.onTopEdge) {
-					var currentHeight = Math.max(clicked.cy - e.clientY  + clicked.h, minHeight);
-					if (currentHeight > minHeight) {
-						pane.style.height = currentHeight + 'px';
-						pane.style.top = e.clientY + 'px';
-					}
-				}
-
-				hintHide();
-
-				resize(b.width, b.height);
-
-				return;
-			}
-
-			if (clicked && clicked.isMoving) {
-
-				switch(checks()) {
-					case 'full-screen':
-						setBounds(ghostpane, 0, 0, window.innerWidth, window.innerHeight);
-						ghostpane.style.opacity = 0.2;
-						break;
-					case 'snap-top-edge':
-						setBounds(ghostpane, 0, 0, window.innerWidth, window.innerHeight / 2);
-						ghostpane.style.opacity = 0.2;
-						break;
-					case 'snap-left-edge':
-						setBounds(ghostpane, 0, 0, window.innerWidth / 2, window.innerHeight);
-						ghostpane.style.opacity = 0.2;
-						break;
-					case 'snap-right-edge':
-						setBounds(ghostpane, window.innerWidth / 2, 0, window.innerWidth / 2, window.innerHeight);
-						ghostpane.style.opacity = 0.2;
-						break;
-					case 'snap-bottom-edge':
-						setBounds(ghostpane, 0, window.innerHeight / 2, window.innerWidth, window.innerHeight / 2);
-						ghostpane.style.opacity = 0.2;
-						break;
-					default:
-						hintHide();
-				}
-
-				if (preSnapped) {
-					setBounds(pane,
-						e.clientX - preSnapped.width / 2,
-						e.clientY - Math.min(clicked.y, preSnapped.height),
-						preSnapped.width,
-						preSnapped.height
-					);
-					return;
-				}
-
-				// moving
-				pane.style.top = (e.clientY - clicked.y) + 'px';
-				pane.style.left = (e.clientX - clicked.x) + 'px';
-
-				return;
-			}
-
-			// This code executes when mouse moves without clicking
-
-			// style cursor
-			if (onRightEdge && onBottomEdge || onLeftEdge && onTopEdge) {
-				pane.style.cursor = 'nwse-resize';
-			} else if (onRightEdge && onTopEdge || onBottomEdge && onLeftEdge) {
-				pane.style.cursor = 'nesw-resize';
-			} else if (onRightEdge || onLeftEdge) {
-				pane.style.cursor = 'ew-resize';
-			} else if (onBottomEdge || onTopEdge) {
-				pane.style.cursor = 'ns-resize';
-			} else if (canMove()) {
-				pane.style.cursor = 'move';
-			} else {
-				pane.style.cursor = 'default';
-			}
 		}
 
 		function checks() {
