@@ -671,6 +671,7 @@ function Timeliner(target, targetEl) {
 	// Enter - play all
 	// k - keyframe
 
+/*
 	document.addEventListener('keydown', function(e) {
 		var play = e.keyCode == 32; // space
 		var enter = e.keyCode == 13; //
@@ -697,6 +698,7 @@ function Timeliner(target, targetEl) {
 		}
 		else console.log('keydown', e.keyCode);
 	});
+*/
 
 	var needsResize = true;
 
